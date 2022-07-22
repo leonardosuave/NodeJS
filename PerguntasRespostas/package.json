@@ -1,0 +1,19 @@
+{
+  "name": "perguntasrespostas",
+  "version": "1.0.0",
+  "description": "Plataforma de perguntas e respostas",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js --ignore public --ignore frontend"
+  },
+  "author": "Leonardo Suave",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
