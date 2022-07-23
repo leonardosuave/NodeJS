@@ -1,27 +1,15 @@
 const express = require('express');
 const app = express();
 
-//View engine Express
-app.set('view engine', 'ejs');
+app.set('view engine', 'ejs');      //View engine Express
+app.use(express.static('public'));  //Arquivos estáticos
 
 //Rotas
-app.get('/:nome?/:lang?', (req, res) => {
-
-    //Vai pegar os parametros e jogar na view index.ejs
-    const nome = req.params.nome;
-    const lang = req.params.lang;
-
-    const objeto = {pet: 'Judite', carro: 'HB20'}
-    res.render('index', {
-        objeto,
-        nome: nome,
-        lang: lang,
-        empresa: 'Sem empresa',
-        inscritos: 80000
-    });
+app.get('/', (req, res) => {
+    res.render('index')
 });
 
-//Escuta
+//Escuta do server
 app.listen(8080, () => {
     console.log('Server conectado!')
     console.log()
