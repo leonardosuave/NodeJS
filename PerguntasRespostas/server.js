@@ -8,6 +8,9 @@ app.use(express.static('public'));  //Arquivos estáticos
 app.get('/', (req, res) => {
     res.render('index')
 });
+app.get('/perguntar', (req, res) => {
+    res.render('perguntar')
+});
 
 //Escuta do server
 app.listen(8080, () => {
