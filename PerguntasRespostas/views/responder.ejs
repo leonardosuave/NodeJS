@@ -1,0 +1,19 @@
+<%- include('includes/header') %>
+<%- include('includes/nav') %>
+
+    
+<div class="container">
+    <hr>
+    <h1><%= perguntaBD.titulo %></h1>
+    <p><%= perguntaBD.descricao %></p>
+    <hr>
+    <form action="/responder" method="POST">
+        <h3>Responda</h3>
+        <label>Resposta:</label>
+        <textarea placeholder="Digite sua resposta" class="form-control" name="corpo"></textarea><br>
+        <input type="hidden" name="pergunta" value="<%= perguntaBD.id %>"> <!--Para passar o id da pergunta correspondente a resposta-->
+        <button class="btn btn-primary">Responder</button>
+    </form>
+</div>
+    
+<%- include('includes/footer') %>
