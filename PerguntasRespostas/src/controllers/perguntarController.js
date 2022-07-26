@@ -24,7 +24,6 @@ exports.responderPergunta = async (req, res) => {
             where: {perguntaID: perguntaBD.id}, raw: true, order:[
                 ['createdAt', 'DESC'] //Se for encontrado o perguntaBD então sera verificado se existe alguma resposta referente a esta pergunta.
         ]})
-        console.log(respostaBD)
 
         res.render('responder', {perguntaBD, respostaBD})
     } else {
