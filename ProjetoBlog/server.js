@@ -1,9 +1,15 @@
 const express = require('express');
 const app = express();
-const routes = require('./routes');
-const connection = require('./database/database')
+const path = require('path')
+const connection = require('./src/database/database')
 
-app.set('view engine', 'ejs'); //view engine
+//Import routes
+const homeRoute = require('./src/routes/homeRoute')
+
+//view engine
+app.set('views', path.resolve(__dirname, 'src', 'views'))
+app.set('view engine', 'ejs'); 
+
 app.use(express.static('public')) //conteúdo estático
 app.use(express.urlencoded({extended:false}));
 
@@ -17,7 +23,8 @@ connection
         console.log(error)
     })
 
-app.use(routes)
+//express with imports routes    
+app.use(homeRoute)
 
 app.on('ready', () => {
     app.listen(8080, () => {
