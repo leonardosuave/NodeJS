@@ -6,6 +6,10 @@ const connection = require('./database/database')
 //Import routes
 const homeRoute = require('./src/routes/homeRoute')
 
+//Import relate tables
+const Article = require('./src/models/article');
+const Category = require('./src/models/category');
+
 //view engine
 app.set('views', path.resolve(__dirname, 'src', 'views'))
 app.set('view engine', 'ejs'); 
