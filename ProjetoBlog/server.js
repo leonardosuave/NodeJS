@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path')
-const connection = require('./src/database/database')
+const connection = require('./database/database')
 
 //Import routes
 const homeRoute = require('./src/routes/homeRoute')
