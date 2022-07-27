@@ -1,9 +1,10 @@
 const express = require('express');
 const route = express.Router();
 
-const categoririesController = require('../controllers/categoriesController')
+const categoriesController = require('../controllers/categoriesController')
 
 //Create a new category
-route.get('/admin/categories/new', categoririesController.create)
+route.get('/admin/categories/new', categoriesController.index);
+route.post('/categories/save', categoriesController.create);
 
-module.exports = route
+module.exports = route;

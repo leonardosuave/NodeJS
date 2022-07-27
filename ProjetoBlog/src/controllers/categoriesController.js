@@ -1,21 +1,17 @@
-const express = require('express');
-const route = express.Router();
+const Category = require('../models/categoriesModels')
 
-exports.create = (req, res) => {
+exports.index = (req, res) => {
     res.render('admin/categories/new')
-}
+};
 
-/*
-route.get('/categories', (req, res) => {
-    res.send('Organizado por categoria')
-});
+exports.create = async (req, res) => {
 
-module.exports = route
+    const title = new Category(req.body)
+    await title.createCategory();  
 
+    if(title.errors.length > 0) {
+        return res.redirect('/admin/categories/new')
+    };
 
-OBS: Em server importar essa rota -> importado na const categoriesController;
-
-Após isso, executar pelo express as rotas importadas pelo categoriesController -> app.use('/'. categoriesController) -> '/' é prefixo e também opcional
-
-*/
-
+    return res.redirect('/')
+};

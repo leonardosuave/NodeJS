@@ -1,0 +1,39 @@
+const CategoryModel = require('../../database/category')
+const slugify = require('slugify');
+
+class Category {
+    constructor(body) {
+        this.title = body.title,
+        this.errors = [];
+    }
+
+    async createCategory() {
+        this.valid();
+        if(this.errors.length > 0) return;
+
+        await this.categoryExist()
+        if(this.errors.length > 0) return;
+
+        await CategoryModel.create({
+            title: this.title,
+            slug: slugify(this.title)
+        })
+
+    }
+
+    valid() {
+        if(this.title === 'undefined') return this.errors.push('Titulo de categoria inválido.')
+        if(this.title.length < 1) return this.errors.push('Titulo da categoria deve ter pelomenos dois caracteres.')
+        return;
+    }
+
+    async categoryExist() {
+        const categoryExist = await CategoryModel.findOne({
+            where: { title: this.title}
+        })
+        if(categoryExist) return this.errors.push('Essa categoria já existe');
+        return;
+    }
+}
+
+module.exports = Category
