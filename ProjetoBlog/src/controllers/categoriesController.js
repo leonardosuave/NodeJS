@@ -1,6 +1,10 @@
 const express = require('express');
 const route = express.Router();
 
+exports.create = (req, res) => {
+    res.render('admin/categories/new')
+}
+
 /*
 route.get('/categories', (req, res) => {
     res.send('Organizado por categoria')

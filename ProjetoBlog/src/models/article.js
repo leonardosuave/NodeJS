@@ -21,6 +21,6 @@ Category.hasMany(Article) //uma categoria tem muitos artigos (1-p-n)
 Article.belongsTo(Category) //Um artigo pertense a uma categoria (1-p-1)
 
 //Sincronizar o model com o relacionamento na tabela de dados
-Article.sync({force: false}) //Para criar a tabela caso não exista 
+Article.sync({force: false}) //Para criar a tabela caso não exista
 
 module.exports = Article
