@@ -1,6 +1,16 @@
 const Category = require('../models/categoriesModels')
+const CategoryModel = require('../../database/category');
 
-exports.index = (req, res) => {
+exports.index = async (req, res) => {
+    const categories = await CategoryModel.findAll({ raw: true, order:[
+        ['createdAt', 'DESC']
+    ]});
+
+    res.render('admin/categories/index', {categories})
+}
+
+
+exports.indexCreate = (req, res) => {
     res.render('admin/categories/new')
 };
 
