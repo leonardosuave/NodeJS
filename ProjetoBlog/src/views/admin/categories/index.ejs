@@ -24,13 +24,16 @@
                     <th>
                         <button class="btn btn-warning">Editar</button>
                         
-                        <a class="btn btn-danger"  href="/categories/delete/<%= category.id %>">Deletar</a>
-
+                        <form action="/categories/delete/<%= category.id %>" style="display: inline;" onclick="confirmDelete(this)" > <!--this refere-se ao elemento form-->
+                            <button class="btn btn-danger btnDel"> Deletar</button>
+                        </form>
                     </th>
                 </tr>
             <% }) %>
         </tbody>
     </table>
 </div>
-<script src="deleteCategory.js"></script>
+
+<script src="/frontend/deleteCategory.js"></script>
+
 <%- include('../../includes/footer') %>
