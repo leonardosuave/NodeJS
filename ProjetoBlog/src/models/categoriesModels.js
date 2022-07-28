@@ -34,6 +34,18 @@ class Category {
         if(categoryExist) return this.errors.push('Essa categoria já existe');
         return;
     }
+
+    //static porque não precisa de dados da class Category
+    static async delete(id) {
+        if(typeof id !== 'string') return;
+
+        const category = await CategoryModel.destroy({
+            where: {
+                id: id
+            }
+        })
+        return category
+    }
 }
 
 module.exports = Category

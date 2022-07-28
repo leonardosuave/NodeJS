@@ -9,7 +9,6 @@ exports.index = async (req, res) => {
     res.render('admin/categories/index', {categories})
 }
 
-
 exports.indexCreate = (req, res) => {
     res.render('admin/categories/new')
 };
@@ -23,5 +22,15 @@ exports.create = async (req, res) => {
         return res.redirect('/admin/categories/new')
     };
 
-    return res.redirect('/')
+    return res.redirect('/admin/categories')
 };
+
+exports.delete = async (req, res) => {
+    if(!req.params.id) return res.render('404');
+
+    //Feito por função estática
+    const CategoryDeleted = await Category.delete(req.params.id);
+    if(!CategoryDeleted) return res.render('404');
+
+    res.redirect('/admin/categories')
+}
