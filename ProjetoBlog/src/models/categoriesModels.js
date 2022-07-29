@@ -23,7 +23,7 @@ class Category {
 
     valid() {
         if(this.title === 'undefined') return this.errors.push('Titulo de categoria inválido.')
-        if(this.title.length < 1) return this.errors.push('Titulo da categoria deve ter pelomenos dois caracteres.')
+        if(this.title.length <= 1) return this.errors.push('Titulo da categoria deve ter pelomenos dois caracteres.')
         return;
     }
 
@@ -45,6 +45,24 @@ class Category {
             }
         })
         return category
+    }
+
+    static async load(id) {
+        if(typeof id !== 'string') return;
+        if(isNaN(id)) return;
+
+        const categoryEdit = await CategoryModel.findByPk(id) //findByPk its same finOne, but is simple
+        return categoryEdit;
+    }
+
+    async edit(id) {
+        if(typeof id !== 'string') return;
+        
+        await CategoryModel.update({title: this.title, slug: slugify(this.title)}, {
+            where: {
+                id: id
+            }
+        })
     }
 }
 

@@ -15,14 +15,22 @@ exports.indexCreate = (req, res) => {
 
 exports.create = async (req, res) => {
 
-    const title = new Category(req.body)
-    await title.createCategory();  
 
-    if(title.errors.length > 0) {
-        return res.redirect('/admin/categories/new')
+    try {
+        const title = new Category(req.body)
+        await title.createCategory();  
+    
+        if(title.errors.length > 0) {
+            return res.redirect('/admin/categories/new')
+        };
+    
+        return res.redirect('/admin/categories')
+
+    }catch(e) {
+        console.log(e)
+        return res.render('404')
     };
-
-    return res.redirect('/admin/categories')
+    
 };
 
 exports.delete = async (req, res) => {
@@ -33,4 +41,28 @@ exports.delete = async (req, res) => {
     if(!CategoryDeleted) return res.render('404');
 
     res.redirect('/admin/categories')
+};
+
+exports.loadCategory = async (req, res) => {
+    if(!req.params.id) return res.render('404');
+
+    const loadCategory = await Category.load(req.params.id);
+    if (!loadCategory) return res.render('404');
+
+    res.render('admin/categories/edit', {loadCategory});
 }
+
+exports.updateCategory = async (req, res) => {
+    if(!req.params.id) return res.render('404');
+
+    try {
+        const editTitle = new Category(req.body);
+        await editTitle.edit(req.params.id);
+    
+        res.redirect('/admin/categories')
+
+    } catch(e) {
+        console.log(e);
+        res.render('404')
+    }
+};
