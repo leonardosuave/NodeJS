@@ -6,6 +6,7 @@ const connection = require('./database/database')
 //Import routes
 const homeRoute = require('./src/routes/homeRoute')
 const categoriesRoute = require('./src/routes/categoryRoute')
+const articlesRoute = require('./src/routes/articleRoute')
 
 //Import relate tables
 const ArticleModel = require('./database/article');
@@ -31,6 +32,7 @@ connection
 //express with imports routes    
 app.use(homeRoute)
 app.use(categoriesRoute)
+app.use(articlesRoute)
 
 app.on('ready', () => {
     app.listen(8080, () => {
