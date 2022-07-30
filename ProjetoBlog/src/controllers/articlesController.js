@@ -1,6 +1,7 @@
 const categoryModel = require('../../database/category');
 const articleModel = require('../../database/article');
 const Article = require('../models/articlesModels');
+const CategoryModel = require('../../database/category');
 
 exports.index = async (req, res) => {
     const articles = await articleModel.findAll({
@@ -38,4 +39,16 @@ exports.delete = async (req, res) => {
     if(!deleteArticle) return res.render('404');
 
     res.redirect('/admin/articles')
+};
+
+exports.slugAccess = async (req, res) => {
+    const articleAccess = await Article.slug(req.params.slug)
+    if(!articleAccess) return res.redirect('/')
+
+    const categories = await CategoryModel.findAll({ raw: true, order: [
+        ['createdAt', 'desc']
+    ]})
+    if(!categories) return res.redirect('/')
+
+    res.render('article', {articleAccess, categories})
 }

@@ -12,4 +12,7 @@ route.post('/articles/save', articlesController.create)
 //Delete article
 route.get('/article/delete/:id', articlesController.delete)
 
+//Acess article by homepage
+route.get('/:slug', articlesController.slugAccess)
+
 module.exports = route

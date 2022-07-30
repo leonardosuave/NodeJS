@@ -60,6 +60,15 @@ class Article {
         })
 
         return deleteArticle;
+    };
+
+    static async slug (slug) {
+        const article = await ArticleModel.findOne({
+            where: {
+                slug: slug
+            }
+        })
+        return article;
     }
 
 }
