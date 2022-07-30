@@ -64,6 +64,15 @@ class Category {
             }
         })
     }
+
+    static async slug(slug) {
+        const category = await CategoryModel.findOne({
+            where: {
+                slug: slug
+            }
+        })
+        return category;
+    }
 }
 
 module.exports = Category

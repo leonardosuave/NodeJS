@@ -15,5 +15,8 @@ route.get('/categories/delete/:id', categoriesController.delete)
 route.get('/categories/edit/:id', categoriesController.loadCategory)
 route.post('/categories/update/:id', categoriesController.updateCategory)
 
+//access category by slug in navbar itens
+route.get('/category/:slug', categoriesController.slugAccess)
+
 
 module.exports = route;

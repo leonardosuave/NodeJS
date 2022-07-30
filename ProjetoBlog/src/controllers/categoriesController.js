@@ -65,3 +65,10 @@ exports.updateCategory = async (req, res) => {
         res.render('404')
     }
 };
+
+exports.slugAccess = async (req, res) => {
+    const categoryAccess = await Category.slug(req.params.slug)
+    if(!categoryAccess) return res.render('404')
+
+    res.render('', {categoryAccess})
+}
