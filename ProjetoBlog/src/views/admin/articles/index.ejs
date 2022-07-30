@@ -23,13 +23,19 @@
                     <td><%= article.title %></td>
                     <td><%= article.slug %></td>
                     <td><%= article.category.title %></td>
-                    <td>Ação</td>
+                    <th>
+                        <a class="btn btn-warning" href="/articles/edit/<%= article.id %>">Editar</a>
+                        
+                        <form action="/article/delete/<%= article.id %>" style="display: inline;" onclick="confirmDelete(this)"> <!--this refere-se ao elemento form-->
+                            <button class="btn btn-danger btnDel"> Deletar</button>
+                        </form>
+                    </th>
                 </tr>
             <% }) %>
         </tbody>
     </table>
 </div>
 
-<script src="/frontend/deleteCategory.js"></script>
+<script src="/frontend/delete.js"></script>
 
 <%- include('../../includes/footer') %>

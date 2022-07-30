@@ -9,4 +9,7 @@ route.get('/admin/articles', articlesController.index)
 route.get('/admin/articles/new', articlesController.indexCreate)
 route.post('/articles/save', articlesController.create)
 
+//Delete article
+route.get('/article/delete/:id', articlesController.delete)
+
 module.exports = route

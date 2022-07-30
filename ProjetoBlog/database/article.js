@@ -18,7 +18,7 @@ const ArticleModel = connection.define('articles', {
 });
 
 CategoryModel.hasMany(ArticleModel) //uma categoria tem muitos artigos (1-p-n)
-ArticleModel.belongsTo(CategoryModel) //Um artigo pertense a uma categoria (1-p-1)
+ArticleModel.belongsTo(CategoryModel) //Um artigo pertense a uma categoria (1-p-1) -> cria CategoryId, referente ao singular do nome da tab categories e referencia o ID dessa category.
 
 //Sincronizar o model com o relacionamento na tabela de dados
 ArticleModel.sync({force: false}) //Para criar a tabela caso não exista

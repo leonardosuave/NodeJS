@@ -25,10 +25,17 @@ exports.create = async (req, res) => {
 
         if(article.errors.length > 0) return res.redirect('/admin/articles/new')
 
-        return res.redirect('/admin/categories');
+        return res.redirect('/admin/articles');
 
     } catch(e) {
         console.log(e);
         return res.render('404')
     };
 };
+
+exports.delete = async (req, res) => {
+    const deleteArticle = await Article.delete(req.params.id)
+    if(!deleteArticle) return res.render('404');
+
+    res.redirect('/admin/articles')
+}

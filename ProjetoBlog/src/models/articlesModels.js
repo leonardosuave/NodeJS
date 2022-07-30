@@ -13,6 +13,7 @@ class Article {
     async createArticle() {
         this.valid();
         if(this.errors.length > 0) return;
+        
 
         
         await this.articleExist()
@@ -28,8 +29,14 @@ class Article {
     }
 
     valid() {
-        if(this.title === 'undefined') return this.errors.push('Titulo de artigo inválido.');
+        if(!this.title) return this.errors.push('Titulo de artigo inválido.');
         if(this.title.length <= 6) return this.errors.push('O titulo do artigo deve ter acima de 6 letras.');
+
+        if(!this.body) return this.errors.push('Precisa escrever algo sobre o artigo.');
+        if(this.body.length <= 10) return this.errors.push('O artigo precisa ter mais caracteres.');
+
+        if(!this.category) return this.errors.push('Precisa selecionar um categoria para o artigo.')
+
         return;
     };
 
@@ -42,6 +49,17 @@ class Article {
         
         if(articleExist) return this.errors.push('Esse artigo ja está registrado nessa categoria.');
         return;
+    };
+
+    static async delete(id) {
+        if(typeof id !== 'string') return;
+        const deleteArticle = await ArticleModel.destroy({
+            where: {
+                id: id
+            }
+        })
+
+        return deleteArticle;
     }
 
 }
