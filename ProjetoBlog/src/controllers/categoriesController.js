@@ -15,7 +15,6 @@ exports.indexCreate = (req, res) => {
 
 exports.create = async (req, res) => {
 
-
     try {
         const title = new Category(req.body)
         await title.createCategory();  
