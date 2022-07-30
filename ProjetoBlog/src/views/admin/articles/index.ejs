@@ -1,0 +1,35 @@
+<%- include('../../includes/header') %>
+<%- include('../../includes/nav') %>
+
+<div class="container">
+    <hr>
+    <h2>Artigoss</h2>
+    <a href="/admin/articles/new" class="btn btn-success">Criar nova artigo</a>
+    <hr>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Slug</th>
+                <th>Categoria</th>
+                <th>ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% articles.forEach(article => { %>
+                <tr>
+                    <td><%= article.id %></td>
+                    <td><%= article.title %></td>
+                    <td><%= article.slug %></td>
+                    <td><%= article.category.title %></td>
+                    <td>Ação</td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<script src="/frontend/deleteCategory.js"></script>
+
+<%- include('../../includes/footer') %>

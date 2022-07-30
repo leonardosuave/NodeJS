@@ -1,8 +1,16 @@
 const categoryModel = require('../../database/category');
+const articleModel = require('../../database/article');
 const Article = require('../models/articlesModels');
 
-exports.indexCreate = async (req, res) => {
+exports.index = async (req, res) => {
+    const articles = await articleModel.findAll({
+        include: [{model: categoryModel}]
+    });
 
+    res.render('admin/articles/index', { articles });
+}
+
+exports.indexCreate = async (req, res) => {
     const categories = await categoryModel.findAll({ raw: true , order: [
         ['createdAt', 'DESC']
     ]})
@@ -11,7 +19,6 @@ exports.indexCreate = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
-
     try {
         const article = new Article(req.body);
         await article.createArticle();

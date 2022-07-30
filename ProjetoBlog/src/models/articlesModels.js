@@ -39,7 +39,7 @@ class Article {
         const articleExist = await ArticleModel.findOne({
             where: {categoryId: this.category, title: this.title}
         });
-        //console.log(articleExist)
+        
         if(articleExist) return this.errors.push('Esse artigo ja está registrado nessa categoria.');
         return;
     }
