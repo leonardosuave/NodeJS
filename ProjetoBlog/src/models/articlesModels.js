@@ -82,7 +82,7 @@ class Article {
     async edit (id) {
         if(typeof id !== 'string') return;
 
-        await ArticleModel.update({title: this.title, slug: slugify(this.title), body: this.body}, {
+        await ArticleModel.update({title: this.title, slug: slugify(this.title), body: this.body, categoryId: this.category}, {
             where: {
                 id: id
             }

@@ -74,7 +74,7 @@ exports.updateArticle = async (req, res) => {
         const updateArticle = new Article (req.body)
         await updateArticle.edit(req.params.id)
 
-        res.send('/admin/articles');
+        res.redirect('/admin/articles');
 
     } catch(e) {
         console.log(e);
