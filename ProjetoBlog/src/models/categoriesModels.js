@@ -1,4 +1,5 @@
 const CategoryModel = require('../../database/category')
+const ArticleModel = require('../../database/article')
 const slugify = require('slugify');
 
 class Category {
@@ -69,7 +70,8 @@ class Category {
         const category = await CategoryModel.findOne({
             where: {
                 slug: slug
-            }
+            },
+            include: [{model: ArticleModel}]
         })
         return category;
     }

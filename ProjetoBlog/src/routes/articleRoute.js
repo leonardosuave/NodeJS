@@ -9,8 +9,10 @@ route.get('/admin/articles', articlesController.index)
 route.get('/admin/articles/new', articlesController.indexCreate)
 route.post('/articles/save', articlesController.create)
 
-//Delete article
+//Delete and update articles
 route.get('/article/delete/:id', articlesController.delete)
+route.get('/admin/article/edit/:id', articlesController.loadArticle)
+route.post('/admin/article/update/:id', articlesController.updateArticle)
 
 //Acess article by homepage
 route.get('/:slug', articlesController.slugAccess)

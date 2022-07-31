@@ -68,7 +68,12 @@ exports.updateCategory = async (req, res) => {
 
 exports.slugAccess = async (req, res) => {
     const categoryAccess = await Category.slug(req.params.slug)
-    if(!categoryAccess) return res.render('404')
+    if(!categoryAccess) return res.redirect('/');
 
-    res.render('', {categoryAccess})
+    const categories = await CategoryModel.findAll({ raw:true, order:[
+        ['createdAt', 'DESC']
+    ]});
+
+    //Para reaproveitar index.ejs -> deve enviar articles e categories para homenavbar.ejs
+    res.render('index', {articles: categoryAccess.articles, categories});
 }

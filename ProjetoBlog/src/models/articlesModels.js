@@ -69,8 +69,26 @@ class Article {
             }
         })
         return article;
+    };
+
+    static async load (id) {
+        if(typeof id !== 'string') return;
+        if(isNaN(id)) return;
+
+        const loadArticle = await ArticleModel.findByPk(id);
+        return loadArticle;
+    };
+
+    async edit (id) {
+        if(typeof id !== 'string') return;
+
+        await ArticleModel.update({title: this.title, slug: slugify(this.title), body: this.body}, {
+            where: {
+                id: id
+            }
+        })
     }
 
-}
+};
 
 module.exports = Article;

@@ -52,3 +52,32 @@ exports.slugAccess = async (req, res) => {
 
     res.render('article', {articleAccess, categories})
 }
+
+exports.loadArticle = async (req, res) => {
+    if(!req.params.id) return res.render('404');
+
+    const loadArticle = await Article.load(req.params.id);
+    if(!loadArticle) return res.render('404');
+
+    const categories = await categoryModel.findAll({ raw: true , order: [
+        ['createdAt', 'DESC']
+    ]})
+
+
+    res.render('admin/articles/edit', {loadArticle, categories})
+};
+
+exports.updateArticle = async (req, res) => {
+    try {
+        if(!req.params.id) return res.render('404');
+
+        const updateArticle = new Article (req.body)
+        await updateArticle.edit(req.params.id)
+
+        res.send('/admin/articles');
+
+    } catch(e) {
+        console.log(e);
+        res.render('404')
+    }
+}
