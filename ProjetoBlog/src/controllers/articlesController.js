@@ -1,18 +1,17 @@
-const categoryModel = require('../../database/category');
-const articleModel = require('../../database/article');
-const Article = require('../models/articlesModels');
 const CategoryModel = require('../../database/category');
+const ArticleModel = require('../../database/article');
+const Article = require('../models/articlesModels');
 
 exports.index = async (req, res) => {
-    const articles = await articleModel.findAll({
-        include: [{model: categoryModel}]
+    const articles = await ArticleModel.findAll({
+        include: [{model: CategoryModel}]
     });
 
     res.render('admin/articles/index', { articles });
 }
 
 exports.indexCreate = async (req, res) => {
-    const categories = await categoryModel.findAll({ raw: true , order: [
+    const categories = await CategoryModel.findAll({ raw: true , order: [
         ['createdAt', 'DESC']
     ]})
 
@@ -59,7 +58,7 @@ exports.loadArticle = async (req, res) => {
     const loadArticle = await Article.load(req.params.id);
     if(!loadArticle) return res.render('404');
 
-    const categories = await categoryModel.findAll({ raw: true , order: [
+    const categories = await CategoryModel.findAll({ raw: true , order: [
         ['createdAt', 'DESC']
     ]})
 

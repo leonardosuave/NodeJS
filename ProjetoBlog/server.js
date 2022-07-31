@@ -18,6 +18,7 @@ app.set('view engine', 'ejs');
 
 app.use(express.static('public')) //conteúdo estático
 app.use(express.urlencoded({extended:false}));
+app.use(express.json())
 
 //Conection DB
 connection
