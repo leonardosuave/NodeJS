@@ -1,4 +1,5 @@
 const ArticleModel = require('../../database/article');
+const CategoryModel = require('../../database/category');
 
 exports.index = async (req, res) => {
     let offset = 0
@@ -21,9 +22,15 @@ exports.index = async (req, res) => {
     };
 
     let result = {
+        page: parseInt(req.params.num), //Para saber qual pag está.
         next: next,
         articlePage: articlePage
     }
 
-    res.json(result)
+    //console.log(result)
+    
+    //Enviar as categories pq o render page trabalha com homenavbar que possui categories 
+    const categories = await CategoryModel.findAll()
+
+    res.render('admin/articles/page', {result, categories});
 }

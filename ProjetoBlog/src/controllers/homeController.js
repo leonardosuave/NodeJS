@@ -5,7 +5,9 @@ const CategoryModel = require('../../database/category');
 exports.index = async (req, res) => {
     const articles = await ArticleModel.findAll({ raw: true, order:[
         [ 'createdAt', 'DESC']
-    ]});
+    ],
+    limit: 4 //Para mostrar apenas os ultimos 4 artigos na page renderizada
+});
 
     const categories = await CategoryModel.findAll({ raw: true, order: [
         ['createdAt', 'DESC']
