@@ -44,6 +44,7 @@ exports.slugAccess = async (req, res) => {
     const articleAccess = await Article.slug(req.params.slug)
     if(!articleAccess) return res.redirect('/')
 
+    //Para utilizar a homenavbar em article.ejs
     const categories = await CategoryModel.findAll({ raw: true, order: [
         ['createdAt', 'desc']
     ]})

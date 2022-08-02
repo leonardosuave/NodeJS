@@ -9,6 +9,7 @@ exports.index = async (req, res) => {
     limit: 4 //Para mostrar apenas os ultimos 4 artigos na page renderizada
 });
 
+    //Para utilizar a homenavbar em index.ejs
     const categories = await CategoryModel.findAll({ raw: true, order: [
         ['createdAt', 'DESC']
     ]})
