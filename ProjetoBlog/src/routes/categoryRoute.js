@@ -1,13 +1,14 @@
 const express = require('express');
 const route = express.Router();
 
-const categoriesController = require('../controllers/categoriesController')
+const categoriesController = require('../controllers/categoriesController');
+const { loginRequired } = require('../middlewares/middleware');
 
 //Page with categories
-route.get('/admin/categories', categoriesController.index)
+route.get('/admin/categories',loginRequired, categoriesController.index)
 
 //Create a new category
-route.get('/admin/categories/new', categoriesController.indexCreate);
+route.get('/admin/categories/new',categoriesController.indexCreate);
 route.post('/categories/save', categoriesController.create);
 
 //delete and edit categories

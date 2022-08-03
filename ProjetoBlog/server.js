@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path')
+const session = require('express-session')
 const connection = require('./database/database')
 
 //Import routes
@@ -17,6 +18,13 @@ const UserModel = require('./database/login')
 //view engine
 app.set('views', path.resolve(__dirname, 'src', 'views'))
 app.set('view engine', 'ejs'); 
+
+//Session
+app.use(session({
+    resave: false,
+    saveUninitialized: false,
+    secret: 'Qualquer coisa pode ser', cookie: {maxAge: 1000*60*60}
+}))
 
 app.use(express.static('public')) //conteúdo estático
 app.use(express.urlencoded({extended:false}));
