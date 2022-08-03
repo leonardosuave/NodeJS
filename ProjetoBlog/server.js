@@ -7,10 +7,12 @@ const connection = require('./database/database')
 const homeRoute = require('./src/routes/homeRoute')
 const categoriesRoute = require('./src/routes/categoryRoute')
 const articlesRoute = require('./src/routes/articleRoute')
+const loginRoute = require('./src/routes/loginRoute')
 
-//Import relate tables
+//Import relate tables and executy the create table
 const ArticleModel = require('./database/article');
 const CategoryModel = require('./database/category');
+const UserModel = require('./database/login')
 
 //view engine
 app.set('views', path.resolve(__dirname, 'src', 'views'))
@@ -34,6 +36,7 @@ connection
 app.use(homeRoute)
 app.use(categoriesRoute)
 app.use(articlesRoute)
+app.use(loginRoute)
 
 app.on('ready', () => {
     app.listen(8080, () => {
