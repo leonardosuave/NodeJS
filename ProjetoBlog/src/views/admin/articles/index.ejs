@@ -25,6 +25,8 @@
                     <td><%= article.slug %></td>
                     <td><%= article.category.title %></td>
                     <th>
+                        <a class="btn btn-primary" href="/<%= article.slug %>">Ler</a>
+
                         <a class="btn btn-warning" href="/admin/article/edit/<%= article.id %>">Editar</a>
                         
                         <form action="/article/delete/<%= article.id %>" style="display: inline;" onclick="confirmDelete(this)"> <!--this refere-se ao elemento form-->

@@ -49,3 +49,54 @@ exports.index = async (req, res) => {
 
     res.render('admin/articles/page', {result, categories});
 };
+
+exports. artToCategory = async (req, res) => {
+    let offset = 0
+    let quant = 4 //Qt de artigos por pagina
+
+    if(isNaN(req.params.num) || req.params.num >= 1) {
+        offset = (parseInt(req.params.num) -1) * quant;
+    }
+
+    const articlePage = await ArticleModel.findAndCountAll({
+        where: {
+            categoryId: req.params.category
+        },
+        limit: quant,
+        offset: offset
+    })
+
+    let next;
+    if(offset + 4 >= articlePage.count) {
+        next = false;
+    } else {
+        next = true;
+    };
+
+    let result = {
+        page: parseInt(req.params.num), //Para saber qual pag está.
+        next: next,
+        articlePage: articlePage
+    }
+
+
+    //Caso seja direcionado uma pagina negativa será redirecionado para a primeira pagina e sera realizado os demais processo deste controller
+    if((parseInt(req.params.num) < 1)) {
+        res.redirect(`/articles/${req.params.category}/page/1`)
+    };
+    
+    //Caso seja direcionado a uma página maior que a quantidade existente será direcionado para a ultima página.
+    let countArticles = result.articlePage.count
+    let countPage = countArticles / quant
+    let maxPage = Math.ceil(countPage)
+
+    if((parseInt(req.params.num) > maxPage)) {
+        res.redirect(`/articles/${req.params.category}/page/${maxPage}`)
+    }
+
+    
+    //Enviar as categories pq o render page trabalha com homenavbar que possui categories 
+    const category = await CategoryModel.findByPk(req.params.category)
+    
+    res.render('admin/articles/articlesToCategory', {result, category});
+}

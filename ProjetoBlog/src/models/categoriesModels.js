@@ -40,6 +40,12 @@ class Category {
     static async delete(id) {
         if(typeof id !== 'string') return;
 
+        await ArticleModel.destroy({
+            where: {
+                categoryId: id
+            }
+        })
+
         const category = await CategoryModel.destroy({
             where: {
                 id: id

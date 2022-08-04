@@ -1,5 +1,6 @@
 const express = require('express');
 const route = express.Router();
+const pageController = require('../controllers/pageController')
 
 const categoriesController = require('../controllers/categoriesController');
 const { loginRequired } = require('../middlewares/middleware');
@@ -18,6 +19,9 @@ route.post('/categories/update/:id', loginRequired, categoriesController.updateC
 
 //access category by slug in navbar itens
 route.get('/category/:slug', loginRequired, categoriesController.slugAccess)
+
+//TESTE DE PAG DE ARTIGOS POR CATEGORIA
+route.get('/articles/:category/page/:num', loginRequired, pageController.artToCategory)
 
 
 module.exports = route;

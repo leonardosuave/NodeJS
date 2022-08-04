@@ -20,6 +20,6 @@ route.post('/admin/article/update/:id', loginRequired, articlesController.update
 route.get('/:slug', loginRequired, articlesController.slugAccess)
 
 //Page to access articles
-route.get('/article/page/:num', pageController.index)
+route.get('/article/page/:num', loginRequired, pageController.index)
 
 module.exports = route
