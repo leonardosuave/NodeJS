@@ -3,10 +3,11 @@ const app = express();
 const path = require('path')
 const session = require('express-session')
 const flashMessages = require('connect-flash')
+const csrf = require('csurf')
 const connection = require('./database/database')
 
 //Import middlewares
-const { middlewareGlobal } = require('./src/middlewares/middleware')
+const { middlewareGlobal, checkCSRFerror, csrfMiddleware } = require('./src/middlewares/middleware')
 
 //Import routes
 const homeRoute = require('./src/routes/homeRoute')
@@ -35,6 +36,9 @@ app.use(express.static('public')) //conteúdo estático
 app.use(express.urlencoded({extended:false}));
 app.use(express.json())
 
+//csrf -> Para segurança de envio de formulários
+app.use(csrf())
+
 //Conection DB
 connection
     .authenticate()
@@ -46,7 +50,9 @@ connection
     })
     
 //express with middlewares
-app.use(middlewareGlobal)    
+app.use(middlewareGlobal)
+app.use(checkCSRFerror)
+app.use(csrfMiddleware)    
 
 //express with imports routes    
 app.use(homeRoute)

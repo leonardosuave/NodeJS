@@ -21,7 +21,7 @@
             <div class="col col-12">
 
                 <!--Voltar página-->
-                <% if(result.page > 1 || !result.next) { %>
+                <% if(result.page > 1) { %>
                     <a style="float: left" href="/articles/<%= category.id %>/page/<%= result.page - 1 %>">Voltar página</a>
                 <% } %>
 

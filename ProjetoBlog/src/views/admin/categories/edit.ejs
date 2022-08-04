@@ -9,6 +9,9 @@
         </div>
         <div class="card-body">
             <form action="/categories/update/<%= loadCategory.id %>" method="POST">
+
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                 <input class="form-control" type="text" name="title" value="<%= loadCategory.title %>"><br>
                 <button class="btn btn-success">Editar</button>
             </form>

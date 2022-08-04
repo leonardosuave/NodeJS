@@ -66,19 +66,25 @@ exports. artToCategory = async (req, res) => {
         offset: offset
     })
 
+    //Se for acessado os artigos de uma categoria que ainda não possui artigos registrados. -> Redireciona com uma msg de aviso. 
+    if(articlePage.count == 0) {
+       req.flash('errors', 'Essa categoria ainda não possui artigos cadastrados.') 
+       return res.redirect('/admin/categories')
+    }
+    
+
     let next;
-    if(offset + 4 >= articlePage.count) {
+    if(offset + quant >= articlePage.count) {
         next = false;
     } else {
         next = true;
     };
 
     let result = {
-        page: parseInt(req.params.num), //Para saber qual pag está.
-        next: next,
-        articlePage: articlePage
+        page: parseInt(req.params.num), //Para passar para número e saber qual pag está.
+        next: next, //Se terá proxima página
+        articlePage: articlePage //Os artigos importados
     }
-
 
     //Caso seja direcionado uma pagina negativa será redirecionado para a primeira pagina e sera realizado os demais processo deste controller
     if((parseInt(req.params.num) < 1)) {
@@ -95,7 +101,7 @@ exports. artToCategory = async (req, res) => {
     }
 
     
-    //Enviar as categories pq o render page trabalha com homenavbar que possui categories 
+    //Envia a category dos artigos importados para aplicar na rota dinâmica das proximas páginas -> será utilizado na rota o category.id 
     const category = await CategoryModel.findByPk(req.params.category)
     
     res.render('admin/articles/articlesToCategory', {result, category});

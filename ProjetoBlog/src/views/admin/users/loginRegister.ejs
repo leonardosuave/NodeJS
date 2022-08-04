@@ -17,7 +17,7 @@
             <p>Para criar conta, preencha o formulário abaixo.</p>
   
             <form class="form-registrar" action="/users/register" method="POST"> <!--Rota para receber os dados do formulário-->
-              
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">  
               <!--Config de cadastro-->
               <div class="form-group"> 
                 <label>Seu email</label>
@@ -44,7 +44,9 @@
             <h4>Faça seu login</h4>
             <p>Se você ja tem uma conta, faça o login abaixo.</p>
             
-            <form class="form-login" action="/login/authenticate" method="POST"> <!--Rota para receber os dados do formulário-->
+            <form class="form-login" action="/login/authenticate" method="POST">
+               <!--Rota para receber os dados do formulário-->
+               <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
               
               <div class="form-group"> <!--Config de cadastro-->
                 <label>Seu email</label>
