@@ -24,7 +24,7 @@ class Category {
 
     valid() {
         if(this.title === 'undefined') return this.errors.push('Titulo de categoria inválido.')
-        if(this.title.length <= 1) return this.errors.push('Titulo da categoria deve ter pelomenos dois caracteres.')
+        if(this.title.length <= 1) return this.errors.push('Titulo da categoria deve ter pelo menos dois caracteres.')
         return;
     }
 

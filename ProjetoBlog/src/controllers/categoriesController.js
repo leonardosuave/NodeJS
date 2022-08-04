@@ -20,9 +20,11 @@ exports.create = async (req, res) => {
         await title.createCategory();  
     
         if(title.errors.length > 0) {
+            req.flash('errors', title.errors)
             return res.redirect('/admin/categories/new')
         };
     
+        req.flash('success', 'Categoria criada com sucesso.')
         return res.redirect('/admin/categories')
 
     }catch(e) {
@@ -39,6 +41,7 @@ exports.delete = async (req, res) => {
     const CategoryDeleted = await Category.delete(req.params.id);
     if(!CategoryDeleted) return res.render('404');
 
+    req.flash('success', 'Categoria deletada.')
     res.redirect('/admin/categories')
 };
 
@@ -58,6 +61,7 @@ exports.updateCategory = async (req, res) => {
         const editTitle = new Category(req.body);
         await editTitle.edit(req.params.id);
     
+        req.flash('success', 'Categoria atualizada.')
         res.redirect('/admin/categories')
 
     } catch(e) {

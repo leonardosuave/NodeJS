@@ -2,21 +2,22 @@ const express = require('express');
 const route = express.Router();
 const articlesController = require('../controllers/articlesController')
 const pageController = require('../controllers/pageController');
+const { loginRequired } = require('../middlewares/middleware');
 
 //Home page articles
-route.get('/admin/articles', articlesController.index)
+route.get('/admin/articles', loginRequired, articlesController.index)
 
 //Create articles
-route.get('/admin/articles/new', articlesController.indexCreate)
-route.post('/articles/save', articlesController.create)
+route.get('/admin/articles/new', loginRequired, articlesController.indexCreate)
+route.post('/articles/save', loginRequired, articlesController.create)
 
 //Delete and update articles
-route.get('/article/delete/:id', articlesController.delete)
-route.get('/admin/article/edit/:id', articlesController.loadArticle)
-route.post('/admin/article/update/:id', articlesController.updateArticle)
+route.get('/article/delete/:id', loginRequired, articlesController.delete)
+route.get('/admin/article/edit/:id', loginRequired, articlesController.loadArticle)
+route.post('/admin/article/update/:id', loginRequired, articlesController.updateArticle)
 
 //Acess article by homepage
-route.get('/:slug', articlesController.slugAccess)
+route.get('/:slug', loginRequired, articlesController.slugAccess)
 
 //Page to access articles
 route.get('/article/page/:num', pageController.index)

@@ -23,8 +23,12 @@ exports.create = async (req, res) => {
         const article = new Article(req.body);
         await article.createArticle();
 
-        if(article.errors.length > 0) return res.redirect('/admin/articles/new')
+        if(article.errors.length > 0) {
+            req.flash('errors', article.errors)
+            return res.redirect('/admin/articles/new')
+        } 
 
+        req.flash('success', 'Artigo criado com sucesso.')
         return res.redirect('/admin/articles');
 
     } catch(e) {
@@ -37,6 +41,7 @@ exports.delete = async (req, res) => {
     const deleteArticle = await Article.delete(req.params.id)
     if(!deleteArticle) return res.render('404');
 
+    req.flash('success', 'Artigo deletado.')
     res.redirect('/admin/articles')
 };
 
@@ -74,6 +79,12 @@ exports.updateArticle = async (req, res) => {
         const updateArticle = new Article (req.body)
         await updateArticle.edit(req.params.id)
 
+        if(updateArticle.errors.length > 0) {
+            req.flash('errors', updateArticle.errors)
+            return res.redirect(`/admin/article/edit/${req.params.id}`)
+        } 
+
+        req.flash('success', 'Artigo atualizado com sucesso.')
         res.redirect('/admin/articles');
 
     } catch(e) {

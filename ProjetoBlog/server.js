@@ -2,7 +2,11 @@ const express = require('express');
 const app = express();
 const path = require('path')
 const session = require('express-session')
+const flashMessages = require('connect-flash')
 const connection = require('./database/database')
+
+//Import middlewares
+const { middlewareGlobal } = require('./src/middlewares/middleware')
 
 //Import routes
 const homeRoute = require('./src/routes/homeRoute')
@@ -25,6 +29,7 @@ app.use(session({
     saveUninitialized: false,
     secret: 'Qualquer coisa pode ser', cookie: {maxAge: 1000*60*60}
 }))
+app.use(flashMessages())
 
 app.use(express.static('public')) //conteúdo estático
 app.use(express.urlencoded({extended:false}));
@@ -38,7 +43,10 @@ connection
         app.emit('ready')
     }).catch((error) =>{
         console.log(error)
-    })  
+    })
+    
+//express with middlewares
+app.use(middlewareGlobal)    
 
 //express with imports routes    
 app.use(homeRoute)

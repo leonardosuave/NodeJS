@@ -5,19 +5,19 @@ const categoriesController = require('../controllers/categoriesController');
 const { loginRequired } = require('../middlewares/middleware');
 
 //Page with categories
-route.get('/admin/categories',loginRequired, categoriesController.index)
+route.get('/admin/categories', loginRequired, categoriesController.index)
 
 //Create a new category
-route.get('/admin/categories/new',categoriesController.indexCreate);
-route.post('/categories/save', categoriesController.create);
+route.get('/admin/categories/new', loginRequired, categoriesController.indexCreate);
+route.post('/categories/save', loginRequired, categoriesController.create);
 
 //delete and edit categories
-route.get('/categories/delete/:id', categoriesController.delete)
-route.get('/categories/edit/:id', categoriesController.loadCategory)
-route.post('/categories/update/:id', categoriesController.updateCategory)
+route.get('/categories/delete/:id', loginRequired, categoriesController.delete)
+route.get('/categories/edit/:id', loginRequired, categoriesController.loadCategory)
+route.post('/categories/update/:id', loginRequired, categoriesController.updateCategory)
 
 //access category by slug in navbar itens
-route.get('/category/:slug', categoriesController.slugAccess)
+route.get('/category/:slug', loginRequired, categoriesController.slugAccess)
 
 
 module.exports = route;

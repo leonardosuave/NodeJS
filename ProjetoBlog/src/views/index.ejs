@@ -1,14 +1,22 @@
 <%- include('includes/header') %>
-<%- include('includes/homenavbar') %>
+<%- include('includes/nav') %>
 <body>
+    
     <div class="container">
+
+        <%- include('includes/messages') %>
+
         <div class="jumbotron">
-            <h1 class="display-4">Bem vindo</h1>
-            <p class="lead">Este é um blog para criado para praticar os conceitos de programação.</p>
+            <% if(user) { %>
+                <h1 class="display-4">Seja bem vindo <%= user.name %></h1>
+            <% } else { %>
+                <h1 class="display-4">Seja bem vindo</h1>
+            <% } %>
+            <p class="lead">Este é um blog criado para praticar os conceitos de programação.</p>
             <hr class="my-4">
             <p>Clique aqui para saber mais .</p>
             <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-          </div>
+        </div>
         <hr>
 
         <!--Para inserir os artigos na pag-->

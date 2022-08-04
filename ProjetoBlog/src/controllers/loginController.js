@@ -10,10 +10,12 @@ exports.register = async (req, res) => {
         await login.register();
 
         if(login.errors.length > 0) {
+            req.flash('errors', login.errors)
             return res.redirect('/admin/users/login')
         }
 
-        return res.redirect('/')
+        req.flash('success', 'Registro realizado com sucesso.')
+        res.redirect('/admin/users/login')
 
     } catch(e) {
         console.log(e)
@@ -27,10 +29,12 @@ exports.login = async (req, res) => {
         await login.login();
 
         if(login.errors.length > 0) {
+            req.flash('errors', login.errors)
             return res.redirect('/admin/users/login')
         }
 
         req.session.user = login.user
+        req.flash('success', 'Login realizado com sucesso.')
         res.redirect('/')
 
     } catch(e) {
@@ -42,5 +46,6 @@ exports.login = async (req, res) => {
 
 exports.logout = (req, res) => {
     req.session.user = undefined
+    req.flash('success','Sessão encerrada com sucesso.')
     return res.redirect('/admin/users/login')
 }
