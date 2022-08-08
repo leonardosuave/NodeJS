@@ -3,6 +3,7 @@ const Processor = require('./Processor');
 const Table = require('./Table')
 const HtmlParsers = require('./HtmlParser')
 const Writer= require('./Writer')
+const PDFWriter = require('./pdfWriter')
 
 const leitor = new Reader();
 const escritor = new Writer()
@@ -21,9 +22,11 @@ async function main() {
     //Para passar os dados da tabela em string html
     const html = await HtmlParsers.Parse(usuarios)
 
+    //Para escrever um arquivo em formato HTML
     escritor.Write(Date.now() + ".html", html)
-    
 
+    //Para criar um arquivo PDF
+    PDFWriter.WritePDF(Date.now() + '.pdf', html)
 }
 
 main()
