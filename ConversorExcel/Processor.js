@@ -4,7 +4,6 @@ class Processor {
 
         //Quebra as linha do texto e transforma em array
         const rows = data.split('\r\n')
-        console.log(rows)
         let array = [];
 
         //Transforma o array em um array de arrays
