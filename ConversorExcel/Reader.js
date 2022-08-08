@@ -1,19 +1,21 @@
 const fs = require('fs')
+const util = require('util')
 
 class Reader {
+    constructor() {
+        this.reader = util.promisify(fs.readFile)
+    }
 
+    //Método que retorna o dado e não mais apenas lê o arquivo(devido ao uso de promisify)
+    async Read(filepath) {
 
-    //Método de ler arquivo
-    static Read(filepath) {
+        try {
+            return await this.reader(filepath, {encoding: 'utf-8'});
 
-        fs.readFile(filepath, {encoding: 'utf-8'}, (erro, dados) =>{
-            if(erro) {
-            console.log(erro)
-            } else {
-            console.log(dados)
-            }
-        })
-
+        } catch(e) {
+            console.log(e)
+            return undefined;
+        }
     }
 }
 
