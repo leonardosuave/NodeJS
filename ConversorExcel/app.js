@@ -1,8 +1,11 @@
 const Reader = require('./Reader')
 const Processor = require('./Processor');
 const Table = require('./Table')
+const HtmlParsers = require('./HtmlParser')
+const Writer= require('./Writer')
 
 const leitor = new Reader();
+const escritor = new Writer()
 
 async function main() {
 
@@ -14,7 +17,12 @@ async function main() {
 
     //Passa os dados do array obtido para um objeto de tabela
     const usuarios = new Table(dadosProcessados)
-    console.log(usuarios.RowCount)
+    
+    //Para passar os dados da tabela em string html
+    const html = await HtmlParsers.Parse(usuarios)
+
+    escritor.Write(Date.now() + ".html", html)
+    
 
 }
 
