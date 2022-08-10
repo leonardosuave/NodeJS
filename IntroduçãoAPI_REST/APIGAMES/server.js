@@ -168,7 +168,7 @@ app.put('/game/:id', (req, res) => {
     }
 })
 
-app.listen(3030, ()=> {
+app.listen(3031, ()=> {
     console.log('API RODANDO!')
-    console.log('http://localhost:3030')
+    console.log('http://localhost:3031')
 })
