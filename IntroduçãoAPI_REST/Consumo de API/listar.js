@@ -1,3 +1,45 @@
+axios.get('http://localhost:3030/games').then(response => {
+    //console.log(response) -> Objeto com varios itens e o array com os jogos está dentro de data
+    const games = response.data
+    const list = document.getElementById('games'); //Captura o elemento <ul>
+
+    games.forEach(game => {
+        const item = document.createElement('li') 
+
+        //atributos customizados para atualizar como parâmetros de edição e delete.
+        item.setAttribute("data-id", game.id);
+        item.setAttribute("data-title", game.title);
+        item.setAttribute("data-year", game.year);
+        item.setAttribute("data-produtora", game.produtora);
+        item.setAttribute("data-price", game.price);
+
+        item.innerHTML = `${game.title} - R$${game.price}`
+
+        //Criar botão de delete
+        const deleteBtn = document.createElement("button")
+        deleteBtn.innerHTML = 'Deletar'
+        deleteBtn.addEventListener('click', function() {
+            deleteGame(item)
+        });
+
+        //Criar botão de editar
+        const editBtn = document.createElement('button')
+        editBtn.innerHTML = 'Editar'
+        editBtn.addEventListener('click', function() {
+            loadGame(item)
+        })
+
+
+        //Botões filhos do campo correspondente ao item do game
+        item.appendChild(editBtn)
+        item.appendChild(deleteBtn)
+        list.appendChild(item)
+    })
+
+}).catch(error => {
+    console.log(error)
+})
+
 function deleteGame(listItem) {
     const id = listItem.getAttribute('data-id') //Para capturar o valor do atributo para enviar como req.params.id do endPoint
     axios.delete(`http://localhost:3030/game/${id}`).then(response => {
@@ -13,7 +55,7 @@ function deleteGame(listItem) {
 function loadGame(listItem) {
     console.log(listItem)
 
-    //Para capturar o valor do atributo
+    //Para capturar o valor dos atributos customizados
     const id = listItem.getAttribute('data-id');
     const title = listItem.getAttribute('data-title');
     const year = listItem.getAttribute('data-year');
@@ -54,44 +96,3 @@ function updateGame() {
         console.log(erro)
     })
 }
-
-axios.get('http://localhost:3030/games').then(response => {
-    const games = response.data
-    const list = document.getElementById('games');
-
-    games.forEach(game => {
-        const item = document.createElement('li')
-
-        //atributos customizados
-        item.setAttribute("data-id", game.id);
-        item.setAttribute("data-title", game.title);
-        item.setAttribute("data-year", game.year);
-        item.setAttribute("data-produtora", game.produtora);
-        item.setAttribute("data-price", game.price);
-
-        item.innerHTML = `${game.title} - R$${game.price}`
-
-        //Criar botão de delete
-        const deleteBtn = document.createElement("button")
-        deleteBtn.innerHTML = 'Deletar'
-        deleteBtn.addEventListener('click', function() {
-            deleteGame(item)
-        });
-
-        //Criar botão de editar
-        const editBtn = document.createElement('button')
-        editBtn.innerHTML = 'Editar'
-        editBtn.addEventListener('click', function() {
-            loadGame(item)
-        })
-
-
-        //Botões filhos do campo correspondente ao item do game
-        item.appendChild(editBtn)
-        item.appendChild(deleteBtn)
-        list.appendChild(item)
-    })
-
-}).catch(error => {
-    console.log(error)
-})

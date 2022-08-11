@@ -62,11 +62,20 @@ class Game {
 
             if(title != undefined) {
 
-                await GameModel.update({title: title}, {
-                    where: {
-                        id: id
-                    }
+                const checkTitle = await GameModel.findOne({
+                    where: {title: title}
                 })
+
+                if(!checkTitle) {
+                    await GameModel.update({title: title}, {
+                        where: {
+                            id: id
+                        }
+                    })
+                } else {
+                    return false
+                }
+
             }
             if(year != undefined) {
                 await GameModel.update({year: year}, {

@@ -19,8 +19,6 @@ connection
         console.log(e)
     })
 
-//Banco de dados falso em JSON(pode substituir por mysql posteriormente)
-
 app.use(routes)
 
 app.on('ready', () => {
