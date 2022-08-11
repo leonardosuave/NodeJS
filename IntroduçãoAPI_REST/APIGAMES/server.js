@@ -38,13 +38,55 @@ let BD = {
             produtora: 'Studio Indie',
             price: 25
         }
+    ], 
+    users: [
+        {
+        id: 1,
+        name: 'Leonardo Suave',
+        email: 'leonardo.suave15@hotmail.com',
+        password: 'palmeiras'
+    },
+    {
+        id: 2,
+        name: 'Tassiane Pinheiro',
+        email: 'tassiane_pinhei@hotmail.com',
+        password: 'palmeiras'
+    }
     ]
 
 
 }
 
+app.post('/auth', (req, res) => {
+    const {email, password} = req.body
+
+    if(email != undefined) {
+
+        const user = BD.users.find( u => u.email == email) //Se encontrar um usuário significa que o email enviado na req está cadastrado
+
+        if(user != undefined) {
+
+            if(user.password == password) {
+                res.status(200)
+                res.json({token: 'TOKEN FALSO'})
+            } else {
+                res.status(401);
+                res.json({erro: 'Credenciais inválidas!'})
+            }
+
+        } else {
+            res.status(404);
+            res.json('O email não está registrado.')
+        }
+
+    } else {
+        res.status(400);
+        res.json('Email inválido')
+    }
+})
+
 app.get('/games',(req, res) => {
-    res.statusCode = 200; //Status de success
+    res.statusCode(200); //Status de success
     res.json(BD.games);
 });
 
@@ -61,7 +103,7 @@ app.get('/game/:id', (req, res) => {
         const game = BD.games.find(g => g.id ==id)  //Pode ser feito por Async/Await caso utilize controlls nas rotas endPoint
 
         if(game != undefined) {
-            res.statusCode = 200
+            res.statusCode(200)
             res.json(game)
         } else {
 
