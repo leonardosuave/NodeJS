@@ -10,14 +10,14 @@ route.post('/register', userController.registerUser)
 route.post('/auth', userController.login)
 
 //Listar games 
-route.get('/games',  gameController.allGames);
-route.get('/game/:id', gameController.oneGame);
+route.get('/games', auth, gameController.allGames);
+route.get('/game/:id', auth, gameController.oneGame);
 
 //Criar e Deletar game
-route.post('/game', gameController.newGame);
-route.delete('/game/:id', gameController.deleteGame);
+route.post('/game', auth, gameController.newGame);
+route.delete('/game/:id', auth, gameController.deleteGame);
 
 //Editar game
-route.put('/game/:id', gameController.updateGame)
+route.put('/game/:id', auth, gameController.updateGame)
 
 module.exports = route
