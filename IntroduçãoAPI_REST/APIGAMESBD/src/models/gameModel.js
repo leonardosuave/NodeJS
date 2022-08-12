@@ -1,4 +1,4 @@
-const GameModel = require('./database/games')
+const GameModel = require('../../database/games')
 
 class Game {
     constructor(body) {

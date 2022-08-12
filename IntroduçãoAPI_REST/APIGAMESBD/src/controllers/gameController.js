@@ -1,5 +1,5 @@
-const GameModel = require('./database/games')
-const Game = require('./model')
+const GameModel = require('../../database/games')
+const Game = require('../models/gameModel')
 
 exports.allGames = async (req, res) => {
     res.statusCode = 200; //Status de success
@@ -34,7 +34,8 @@ exports.newGame = async (req, res) => {
         await newGame.createNewGame();
     
         if(newGame.errors.length > 0) {
-            res.sendStatus(400)
+            res.status(400)
+            res.json({erro: newGame.errors[0]})
         } else {
             res.sendStatus(200)
         }

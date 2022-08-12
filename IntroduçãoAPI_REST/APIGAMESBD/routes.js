@@ -1,16 +1,23 @@
 const express = require('express');
 const route = express.Router();
-const controller = require('./controller')
+const gameController = require('./src/controllers/gameController')
+const userController = require('./src/controllers/userController')
+
+const {auth} = require('./src/middleware/middleware')
+
+//Login
+route.post('/register', userController.registerUser)
+route.post('/auth', userController.login)
 
 //Listar games 
-route.get('/games', controller.allGames);
-route.get('/game/:id', controller.oneGame);
+route.get('/games',  gameController.allGames);
+route.get('/game/:id', gameController.oneGame);
 
 //Criar e Deletar game
-route.post('/game', controller.newGame);
-route.delete('/game/:id', controller.deleteGame);
+route.post('/game', gameController.newGame);
+route.delete('/game/:id', gameController.deleteGame);
 
 //Editar game
-route.put('/game/:id', controller.updateGame)
+route.put('/game/:id', gameController.updateGame)
 
 module.exports = route

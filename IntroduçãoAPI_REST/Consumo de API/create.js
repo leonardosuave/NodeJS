@@ -18,5 +18,7 @@ function createGame() {
         location.reload()
     }).catch(erro => {
         console.log(erro)
+        alert('[ERRO]. Este titulo ja foi cadastrado!')
+        location.reload()
     })
 }
