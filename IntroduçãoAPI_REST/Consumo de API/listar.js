@@ -1,10 +1,10 @@
 var axiosConfig = {
     headers: {
-        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsZW9uYXJkby5zdWF2ZTE1QGhvdG1haWwuY29tIiwiaWF0IjoxNjYwNDE0MjM3LCJleHAiOjE2NjA1ODcwMzd9.o0QyvTwiRKdKkV7H-IxStZDHtNOrI8LNbWlmU61ZAr4"
+        Authorization: `Bearer ${localStorage.getItem('token')}` 
     }
 }
 
-axios.get('http://localhost:3031/games', axiosConfig).then(response => {
+axios.get('http://localhost:3030/games', axiosConfig).then(response => {
     //console.log(response) -> Objeto com varios itens e o array com os jogos está dentro de data
     const games = response.data
     const list = document.getElementById('games'); //Captura o elemento <ul>
@@ -48,7 +48,7 @@ axios.get('http://localhost:3031/games', axiosConfig).then(response => {
 
 function deleteGame(listItem) {
     const id = listItem.getAttribute('data-id') //Para capturar o valor do atributo para enviar como req.params.id do endPoint
-    axios.delete(`http://localhost:3031/game/${id}`).then(response => {
+    axios.delete(`http://localhost:3030/game/${id}`, axiosConfig).then(response => {
         if(response.status == 200) {
             alert('Game deletado!')
         }
@@ -93,7 +93,7 @@ function updateGame() {
         price: priceInput.value
     }
 
-    axios.put(`http://localhost:3031/game/${id}`, game).then(response => {
+    axios.put(`http://localhost:3030/game/${id}`, game, axiosConfig).then(response => {
         if(response.status == 200) {
             alert('Game atualizado!')
         }

@@ -1,3 +1,9 @@
+var axiosConfig = {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}` 
+    }
+}
+
 function createGame() {
     const titleInput = document.querySelector('#title');
     const yearInput = document.querySelector('#year');
@@ -11,7 +17,7 @@ function createGame() {
         price: priceInput.value
     }
 
-    axios.post('http://localhost:3030/game', game).then(response => {
+    axios.post('http://localhost:3030/game', game, axiosConfig).then(response => {
         if(response.status == 200) {
             alert('Game cadastrado!')
         }
