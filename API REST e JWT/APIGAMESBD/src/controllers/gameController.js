@@ -2,9 +2,10 @@ const GameModel = require('../../database/games')
 const Game = require('../models/gameModel')
 
 exports.allGames = async (req, res) => {
+
     res.statusCode = 200; //Status de success
     const games = await GameModel.findAll()
-    res.json(games);
+    res.json({games, _links: HATEOAS});
 };
 
 exports.oneGame = async (req, res) => {
@@ -14,11 +15,35 @@ exports.oneGame = async (req, res) => {
         
         res.sendStatus(400); //Status que se enquadra aqui.
     } else {
+
+        const HATEOAS = [ 
+            {
+                href: `http://localhost:3030/game/${req.params.id}`,
+                method: 'DELETE',
+                rel: 'delete_game'
+            },
+            {
+                href: `http://localhost:3030/game/${req.params.id}`,
+                method: 'PUT',
+                rel: 'edit_game'
+            },
+            {
+                href: `http://localhost:3030/game/${req.params.id}`,
+                method: 'GET',
+                rel: 'get_game'
+            },
+            {
+                href: 'http://localhost:3030/games',
+                method: 'GET',
+                rel: 'get_all_games'
+            }
+        ]
+
         const game = await GameModel.findByPk(req.params.id)
 
         if(game != undefined) {
             res.statusCode = 200
-            res.json(game)
+            res.json({game, _link: HATEOAS})
         } else {
 
             res.sendStatus(404)
