@@ -1,9 +1,11 @@
 const express = require('express')
 const session = require('express-session')
 const flashMessages = require('express-flash')
+const { middlewareGlobal } = require('./middleware')
 const routes = require('./routes')
 
 const app = express()
+
 app.use(express.urlencoded({extended:false}));
 app.use(express.json())
 
@@ -19,6 +21,7 @@ app.use(session({
 }))
 app.use(flashMessages())
 
+app.use(middlewareGlobal)
 app.use(routes)
 
 

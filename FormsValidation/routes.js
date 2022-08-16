@@ -1,8 +1,9 @@
 const express = require('express');
 const route = express.Router();
+const controller = require('./controller')
 
-route.get('/', (req, res) => {
-    res.render('index')
-})
+route.get('/', controller.index)
+
+route.post('/form', controller.forms)
 
 module.exports = route
