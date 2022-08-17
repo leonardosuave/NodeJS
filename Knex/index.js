@@ -67,10 +67,45 @@ database.where({name: 'Silent Hill'}).update({price: 12.5}).table('game').then(d
 })
 */
 
-//ORDER by
-
+/*ORDER by
 database.select('*').table('game').orderBy('price', 'desc').then(data => {
     console.log(data)
+}).catch(err => {
+    console.log(err)
+})
+*/
+
+/*Associated Insert
+database.insert({
+    name: 'KONAMI',
+    game_id: 4
+
+}).table('estudios').then(data => {
+    console.log(data)
+}).catch(err => {
+    console.log(err)
+})
+*/
+
+//Associated Insert with WHERE
+database.select('game.*', 'estudios.name as estudio_nome').table('game').innerJoin('estudios', 'estudios.game_id', 'game.id').then(data => {
+    const estudiosGamesArray = data;
+    const game = {
+        id: 0,
+        nome: '',
+        estudios: []
+    }
+
+    //Sobrescreve os dados do objeto game.
+    game.id = data[0].id;
+    game.nome = data[0].name;
+
+    data.forEach(estudio => {
+        game.estudios.push(estudio.estudio_nome)
+    })
+
+    console.log(game)
+    
 }).catch(err => {
     console.log(err)
 })
