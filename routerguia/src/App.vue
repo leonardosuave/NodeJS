@@ -1,8 +1,13 @@
 <template>
   <nav>
+    <!--router-link é igual a <a href= "">-->
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/about">About</router-link> |
+    <router-link to="/leonardo"> Saiba mais sobre Leonardo</router-link> |
+    <router-link :to="{name: 'leonardo', params: {dado: 'estudos'}}"> Rota com parâmetro </router-link>
   </nav>
+
+  <!--router-view exibe o conteúdo de rota-->
   <router-view/>
 </template>
 
