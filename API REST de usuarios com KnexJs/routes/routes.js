@@ -1,8 +1,13 @@
 var express = require("express")
-var app = express();
-var router = express.Router();
+var route = express.Router();
+
 var HomeController = require("../controllers/HomeController");
+const UserController = require('../controllers/UserController')
 
-router.get('/', HomeController.index);
+//Home
+route.get('/', HomeController.index);
 
-module.exports = router;
+//User
+route.post('/user', UserController.create)
+
+module.exports = route;

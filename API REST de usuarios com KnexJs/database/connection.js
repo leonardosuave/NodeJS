@@ -6,7 +6,7 @@ var knex = require('knex')({
       host : 'localhost',
       user : 'root',
       password : process.env.CONNECTIONSTRING,
-      database : 'userAPI'
+      database : 'apiusers'
     }
   });
 
