@@ -15,7 +15,7 @@ export default {
   },
 
   created() {
-    console.log(this.$route.params.dado)
+    //console.log(this.$route.params.dado)
     this.parametroDaRota = this.$route.params.dado
   }
 }

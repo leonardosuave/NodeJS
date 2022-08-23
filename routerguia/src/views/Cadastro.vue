@@ -3,6 +3,7 @@
         <input type="text" name="email" id="email" placeholder="e-mail"><br>
         <input type="text" name="nome" id="nome" aria-placeholder="nome"><br>
         <button>Teste</button>
+        <router-view/>
     </div>
 </template>
 

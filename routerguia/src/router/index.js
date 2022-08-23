@@ -17,16 +17,25 @@ const routes = [
     component: AboutView
   },
   {
+    //Rota pai
     path: '/leonardo',
     name: 'leonardo',
-    component: Cadastro
+    component: Cadastro,
+    children: [
+      //Rota filho
+      {
+        path: 'suave',
+        name: 'suave',
+        component: AboutView
+      }
+    ]
   },
   //Parametro
   {
-    path: '/leonardo/:dado',
-    name: 'leonardo',
+    path: '/parametro/:dado',
+    name: 'parametro',
     component: Parametro
-  }
+  },
 
 ]
 
