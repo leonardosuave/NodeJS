@@ -50,6 +50,20 @@ class Register {
             this.status.push(406);
         } 
     }
+
+    static async findAllUsers() {
+        return await knex.select(['id', 'name', 'email', 'role']).table('users')
+    }
+
+    static async findById(id) {
+        const user = await knex.select(['id', 'name', 'email', 'role']).where({id: id}).table('users')
+        
+        if(user.length > 0) {
+            return user[0]
+        } else {
+            return undefined
+        }
+    }
 }
 
 module.exports = Register

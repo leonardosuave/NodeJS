@@ -9,5 +9,7 @@ route.get('/', HomeController.index);
 
 //User
 route.post('/user', UserController.create)
+route.get('/users', UserController.allUsers)
+route.get('/user/:id', UserController.userById)
 
 module.exports = route;
