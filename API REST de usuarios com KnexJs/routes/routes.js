@@ -11,5 +11,6 @@ route.get('/', HomeController.index);
 route.post('/user', UserController.create)
 route.get('/users', UserController.allUsers)
 route.get('/user/:id', UserController.userById)
+route.put('/user', UserController.edit)
 
 module.exports = route;

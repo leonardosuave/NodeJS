@@ -57,11 +57,58 @@ class Register {
 
     static async findById(id) {
         const user = await knex.select(['id', 'name', 'email', 'role']).where({id: id}).table('users')
-        
+
         if(user.length > 0) {
             return user[0]
         } else {
             return undefined
+        }
+    }
+
+    static async update(id, name, email, role) {
+
+        const result = {
+            status: 0,
+            errors: 0
+        }
+
+        const user = await knex.select(['id', 'name', 'email', 'role']).where({id: id}).table('users')
+
+        if(user != undefined) {
+            const editUser = {}
+    
+            if(email != undefined) {
+                if(validator.isEmail(email)) {
+                    if(email != user.email) {
+                        const checkEmail = await knex.select('*').from('users').where({email: email});
+
+                        if(checkEmail.length == 0){
+                            editUser.email = email
+    
+                        } else {
+                            result.status = 406
+                            result.errors = 'Email ja cadastrado'
+                            return {status: false, errors: result.errors, statusError: result.status}
+                        }
+                    };
+                } else {
+                    result.status = 400
+                    result.errors = 'E-mail inválido.'
+                    return {status: false, errors: result.errors, statusError: result.status}
+                }
+            };
+    
+            if(name != undefined) editUser.name = name //edit name
+            if(role != undefined) editUser.role = role //edit role
+
+
+            await knex.update(editUser).where({id: id}).table('users') //edit email
+            return {status: true}
+            
+        } else {
+            result.status = 404
+            result.errors = 'O usuário não existe.'
+            return {status: false, errors: result.errors, statusError: result.status}
         }
     }
 }

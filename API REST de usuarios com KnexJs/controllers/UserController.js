@@ -1,5 +1,5 @@
 const Register = require('../models/userModel')
-const User = require('../database/User')
+const knex = require('../database/connection')
 
 
 exports.create = async (req, res) => {
@@ -40,12 +40,31 @@ exports.userById = async (req, res) => {
             res.json({erro: 'Usuário não encontrado'})
         } else {
             
-            res,status(200)
+            res.status(200)
             res.json(user)
         }
         
 
     }catch(err) {
         console.log(err)
+    }
+}
+
+exports.edit = async (req, res) => {
+
+    try{
+        const {id, name, email, role} = req.body
+        const user = await Register.update(id, name, email, role)
+
+        if(!user.status){
+            res.status(user.statusError)
+            res.json(user.errors)
+            return;
+        }
+    
+        res.sendStatus(200)
+    }catch(e) {
+        console.log(e)
+        res.status(500)
     }
 }
