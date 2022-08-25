@@ -68,3 +68,19 @@ exports.edit = async (req, res) => {
         res.status(500)
     }
 }
+
+exports.delete = async (req, res) => {
+    try{
+        const user = await Register.delete(req.params.id)
+        if(!user.status) {
+            res.status(user.statusError)
+            res.json(user.errors)
+            return
+        }
+
+        res.sendStatus(200)
+    }catch(erro) {
+        console.log(erro)
+        res.status(500)
+    }
+}

@@ -111,6 +111,17 @@ class Register {
             return {status: false, errors: result.errors, statusError: result.status}
         }
     }
+
+    static async delete(id) {
+        
+        const user = await knex.delete().where({id: id}).table('users')
+        
+        if(!user) {
+            return {status: false, errors:'Usuário não encontrado', statusError: 404}
+        }
+
+        return {status: true}
+    }
 }
 
 module.exports = Register
