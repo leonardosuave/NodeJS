@@ -1,6 +1,7 @@
 const knex = require('../database/connection')  //Para checar contas existentes no DB
 const User = require('../database/User')        //Para enviar dados de registro de usuários ao DB 
 const validator = require('validator')          //Validar email
+const bcryptjs = require('bcryptjs')
 
 
 class Register {

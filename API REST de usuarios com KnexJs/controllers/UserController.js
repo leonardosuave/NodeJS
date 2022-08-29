@@ -1,5 +1,6 @@
 const Register = require('../models/userModel')
 const PasswordToken = require('../models/PasswordToken')
+const User = require('../database/User')
 
 
 exports.create = async (req, res) => {
@@ -86,7 +87,8 @@ exports.delete = async (req, res) => {
 }
 
 exports.recoverPassword = async (req, res) => {
-    const result = await PasswordToken.create(req.body.email)
+    const result = await PasswordToken.create(req.body.email) //Este método dentro de uma nova class poderia ser feito tudo neste arquivo através do metodo create() dentro do userModel
+
     if(result.status) {
         //console.log(result.token)
         res.status(200);
@@ -95,5 +97,26 @@ exports.recoverPassword = async (req, res) => {
     } else {
         res.status(result.statusError)
         res.send(result.errors)
+    }
+}
+
+exports.changePassword = async (req, res) => {
+
+    const token = req.body.token;
+    const password = req.body.password
+
+    //Checa se o token ja foi utilizado
+    const isTokenValid = await PasswordToken.validate(token)  
+    
+    if(isTokenValid.status) {
+        //Se não tiver sido utilizado vai trocar a senha 
+        await User.changePassword(password, isTokenValid.token.user_id, isTokenValid.token.token)
+
+        res.status(200)
+        res.send('Senha alterada!')
+
+    } else {
+        res.status(isTokenValid.statusError)
+        res.send(isTokenValid.errors)
     }
 }
