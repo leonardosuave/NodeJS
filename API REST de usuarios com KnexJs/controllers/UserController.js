@@ -1,5 +1,5 @@
 const Register = require('../models/userModel')
-const knex = require('../database/connection')
+const PasswordToken = require('../models/PasswordToken')
 
 
 exports.create = async (req, res) => {
@@ -82,5 +82,18 @@ exports.delete = async (req, res) => {
     }catch(erro) {
         console.log(erro)
         res.status(500)
+    }
+}
+
+exports.recoverPassword = async (req, res) => {
+    const result = await PasswordToken.create(req.body.email)
+    if(result.status) {
+        //console.log(result.token)
+        res.status(200);
+        res.send('' + result.token) //token so é gerado através de string no send()
+
+    } else {
+        res.status(result.statusError)
+        res.send(result.errors)
     }
 }
