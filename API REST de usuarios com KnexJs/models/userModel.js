@@ -125,7 +125,7 @@ class Register {
     }
 
     static async findByEmail(email) {
-        const user = await knex.select(['id', 'name', 'email', 'role']).where({email: email}).table('users')
+        const user = await knex.select(['id', 'name', 'email','password', 'role']).where({email: email}).table('users')
 
         if(user.length > 0) {
             return user[0]

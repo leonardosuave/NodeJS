@@ -1,6 +1,10 @@
 const Register = require('../models/userModel')
 const PasswordToken = require('../models/PasswordToken')
 const User = require('../database/User')
+const bcryptjs = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+
+const secret = 'siajuweqpasmkauqwqsuqjjsppqppwomanuqdnwu'
 
 
 exports.create = async (req, res) => {
@@ -119,4 +123,38 @@ exports.changePassword = async (req, res) => {
         res.status(isTokenValid.statusError)
         res.send(isTokenValid.errors)
     }
+}
+
+exports.login = async (req, res) => {
+
+    //Encontrar se este email esta cadastrado no BD
+    const user = await Register.findByEmail(req.body.email)
+
+    if(user != undefined) {
+
+        //Checar se a senha enviada equivale a senha do BD para o email solicitado.
+        const result = await bcryptjs.compare(req.body.password, user.password)
+
+        if(result) {
+
+            //Se a senha for igual a senha do email solicitado sera gerado o token de acesso.
+            jwt.sign({id: user.id, email: user.email, role: user.role}, secret, {expiresIn: '48h'}, (err, token) => {
+                
+                if(err) {
+                    res.status(400)
+                    res.json({err: 'Falha interna'})
+                } else {
+                    res.status(200)
+                    res.json({token: token})
+                }
+            })
+        } else {
+            res.status(406)
+            res.json({status: 'Senha incorreta.'})
+        }   
+    } else {
+        res.status(406)
+        res.send('Este e-mail não está cadastrado no sistema.')
+    }
+
 }

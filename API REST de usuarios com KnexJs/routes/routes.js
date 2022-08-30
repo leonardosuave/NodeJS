@@ -13,7 +13,12 @@ route.get('/users', UserController.allUsers)
 route.get('/user/:id', UserController.userById)
 route.put('/user', UserController.edit)
 route.delete('/user/:id', UserController.delete)
+
+//Change Password
 route.post('/recoverpassword', UserController.recoverPassword)
 route.post('/changepassword', UserController.changePassword)
+
+//Login
+route.post('/login', UserController.login)
 
 module.exports = route;
