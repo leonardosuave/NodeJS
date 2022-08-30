@@ -4,6 +4,7 @@ const User = require('../database/User')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
+//secret é ideal armazenar em um arquivo separado -> .env
 const secret = 'siajuweqpasmkauqwqsuqjjsppqppwomanuqdnwu'
 
 
@@ -139,10 +140,11 @@ exports.login = async (req, res) => {
 
             //Se a senha for igual a senha do email solicitado sera gerado o token de acesso.
             jwt.sign({id: user.id, email: user.email, role: user.role}, secret, {expiresIn: '48h'}, (err, token) => {
-                
+
                 if(err) {
                     res.status(400)
                     res.json({err: 'Falha interna'})
+                    return
                 } else {
                     res.status(200)
                     res.json({token: token})
@@ -151,6 +153,7 @@ exports.login = async (req, res) => {
         } else {
             res.status(406)
             res.json({status: 'Senha incorreta.'})
+            return
         }   
     } else {
         res.status(406)

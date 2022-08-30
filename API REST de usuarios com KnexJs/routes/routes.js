@@ -3,13 +3,14 @@ var route = express.Router();
 
 var HomeController = require("../controllers/HomeController");
 const UserController = require('../controllers/UserController')
+const Auth = require('../middleware/middleware')
 
 //Home
 route.get('/', HomeController.index);
 
 //User
 route.post('/user', UserController.create)
-route.get('/users', UserController.allUsers)
+route.get('/users', Auth.auth, UserController.allUsers)
 route.get('/user/:id', UserController.userById)
 route.put('/user', UserController.edit)
 route.delete('/user/:id', UserController.delete)
