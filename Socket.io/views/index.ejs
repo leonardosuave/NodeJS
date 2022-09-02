@@ -7,12 +7,37 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>TESTE</h1>
+    <input type="text" name="" id="palavra">
+    <button onclick="enviar()">Enviar</button>
+    <hr>
+    <p id="resultado"></p>
 </body>
 <!--Para importar o socket.io na aplicação do front-end-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js"></script>
     <script>
         //Conecta o socket do frontend ao backend 
         const socket = io('http://localhost:3131')
+
+        //Coleta o valor enviado do front e que é tratado no back para exibir novamente no front
+        socket.on('resultado', (data) => {
+            console.log(data)
+
+            const p = document.getElementById('resultado')
+            p.innerHTML = data
+        })
+
+        //função que captura de valor do input do frontend
+        function enviar() {
+            const input = document.getElementById('palavra')
+            console.log(input.value)
+
+            //Emite evento
+            socket.emit('palavra', input.value) //Envia para o backend
+        }
+
+        //Detecção de cliente desconectado
+        socket.on('disconnect', () => {
+            console.log('Cliente desconectado')
+        })
     </script>
 </html>
