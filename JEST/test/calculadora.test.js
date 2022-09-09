@@ -1,6 +1,6 @@
 //Uso de JEST puro, sem express()
 
-const app = require('../app')
+const app = require('../src/app')
 
 //describe é apenas para agrupar a suite de teste em categorias (Não é necessário para funcionamento) -> Operações básicas é a categoria
 describe('Operações básicas', () => {
