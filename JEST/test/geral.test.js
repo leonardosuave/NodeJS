@@ -4,7 +4,7 @@ const supertest = require('supertest')
 //Permite fazer requisições na aplicação
 const request = supertest(app)  // -> app é referênte a rota de teste
 
-test('A aplicação deve responder na porta 3131', async () => {
+test('A aplicação deve responder na porta 3131', () => {
 
     //Test com promisse sempre deve ter return
     return request.get('/').then(res => expect(res.statusCode).toEqual(200))
